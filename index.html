@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Share the Love • Quick 5-Star Review</title>
+  <meta name="description"
+    content="Thank you for supporting our home bakery! Pick a pre-written review in 1 tap or customize your own, then share on Google in seconds.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Confetti library for celebration -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <!-- QR Code library for printable box stickers -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+</head>
+
+<body>
+
+  <!-- Ambient Luxury Bakery Glow Background -->
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+  <div class="ambient-glow glow-3"></div>
+
+  <!-- Main Container -->
+  <div class="app-wrapper">
+
+    <!-- Top Floating Announcement Bar -->
+    <header class="top-nav">
+      <div class="brand-badge">
+        <span class="badge-icon">🧁</span>
+        <span class="badge-text" id="displayBakeryTag">Freshly Baked with Love</span>
+      </div>
+      <button class="qr-toggle-btn" id="openQrModalBtn" title="Printable QR Code for Bakery Boxes">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7" height="7"></rect>
+          <rect x="14" y="3" width="7" height="7"></rect>
+          <rect x="14" y="14" width="7" height="7"></rect>
+          <rect x="3" y="14" width="7" height="7"></rect>
+        </svg>
+        <span>Box QR Card</span>
+      </button>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-image-container">
+        <img src="assets/hero.png" alt="Artisan Gourmet Bakery Delights" class="hero-img" id="heroImage">
+        <div class="hero-overlay"></div>
+        <div class="hero-rating-pill">
+          <div class="stars-gold">★★★★★</div>
+          <span class="rating-text">5.0 on Google</span>
+        </div>
+      </div>
+
+      <div class="hero-content">
+        <h1 class="hero-title">
+          Loved Your Sweet Treat?
+          <span class="hero-title-italic">Share the Sweetness!</span>
+        </h1>
+        <p class="hero-subtitle">
+          Small home bakeries grow on your kind words. We know writing reviews takes time, so we prepared ready-to-use
+          reviews below. <strong>Tap, tweak if you like, and post in 5 seconds!</strong>
+        </p>
+      </div>
+    </section>
+
+    <!-- Multi-Step Interactive Funnel -->
+    <main class="review-funnel">
+
+      <!-- Step 1: Quick Template Switcher -->
+      <section class="card funnel-step">
+        <div class="step-header">
+          <div class="step-number">1</div>
+          <div class="step-titles">
+            <h2>Pick a Ready-Made Review</h2>
+            <p>Tap any vibe to pre-fill the review box below</p>
+          </div>
+        </div>
+
+        <div class="template-grid" id="templateGrid">
+          <!-- Populated by JavaScript -->
+        </div>
+      </section>
+
+      <!-- Step 2: Interactive Mix & Match Tags (Optional Boost) -->
+      <section class="card funnel-step collapsible-step" id="tagCustomizerSection">
+        <div class="step-header" id="tagSectionHeader">
+          <div class="step-number">2</div>
+          <div class="step-titles">
+            <h2>Customize What You Loved <span class="optional-badge">Optional</span></h2>
+            <p>Tap what you ordered and what made it special</p>
+          </div>
+          <button class="accordion-toggle" id="toggleTagsBtn" aria-label="Toggle customizations">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+        </div>
+
+        <div class="step-content" id="tagSectionBody">
+          <!-- Items ordered -->
+          <div class="tag-group">
+            <label class="tag-label">What treat did you enjoy?</label>
+            <div class="chip-container" id="itemChips">
+              <!-- JS Injected Chips -->
+            </div>
+          </div>
+
+          <!-- What made it memorable -->
+          <div class="tag-group">
+            <label class="tag-label">What made it memorable?</label>
+            <div class="chip-container" id="flavorChips">
+              <!-- JS Injected Chips -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Step 3: Live Review Studio & Live Google Card -->
+      <section class="card funnel-step studio-step">
+        <div class="step-header">
+          <div class="step-number">3</div>
+          <div class="step-titles">
+            <h2>Your Review Preview</h2>
+            <p>Feel free to add your own personal touch or words</p>
+          </div>
+          <button class="shuffle-btn" id="shuffleToneBtn" title="Change Writing Style">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67" />
+            </svg>
+            <span id="toneName">Style: Foodie</span>
+          </button>
+        </div>
+
+        <!-- Google-Style Preview Container -->
+        <div class="google-review-preview">
+          <div class="preview-header">
+            <div class="user-avatar-placeholder">
+              <span>💖</span>
+            </div>
+            <div class="user-meta">
+              <div class="preview-name">A Happy Customer</div>
+              <div class="preview-posting-to">
+                Posting to: <strong id="previewBusinessName">Dakathz Amazing Cakes</strong>
+              </div>
+            </div>
+            <div class="google-g-logo">
+              <svg viewBox="0 0 24 24" width="22" height="22">
+                <path fill="#4285F4"
+                  d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+                <path fill="#34A853"
+                  d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                <path fill="#FBBC05"
+                  d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" />
+                <path fill="#EA4335"
+                  d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" />
+              </svg>
+            </div>
+          </div>
+
+          <!-- Interactive Star Selector -->
+          <div class="interactive-stars" id="starRatingContainer">
+            <span class="star active" data-rating="1">★</span>
+            <span class="star active" data-rating="2">★</span>
+            <span class="star active" data-rating="3">★</span>
+            <span class="star active" data-rating="4">★</span>
+            <span class="star active" data-rating="5">★</span>
+            <span class="stars-label">5.0 Star Rating Selected</span>
+          </div>
+
+          <!-- Live Textarea -->
+          <div class="textarea-wrapper">
+            <textarea id="reviewInput" rows="4"
+              placeholder="Your review will appear here... you can edit anything directly!"
+              aria-label="Editable review text"></textarea>
+
+            <div class="textarea-footer">
+              <span class="char-count" id="charCount">0 characters</span>
+              <span class="seo-badge" id="seoScoreBadge">✨ SEO Optimized for Local Maps</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Big Glowing Action Button -->
+        <div class="cta-container">
+          <button class="primary-cta-btn" id="postReviewBtn">
+            <span class="btn-shine"></span>
+            <span class="btn-icon">📋</span>
+            <span class="btn-text">Copy & Post on Google</span>
+            <span class="btn-arrow">→</span>
+          </button>
+
+          <p class="cta-microcopy">
+            ⚡ <strong>How it works:</strong> Tapping copies your review and immediately opens our Google page so you can
+            simply paste and tap Submit!
+          </p>
+        </div>
+
+      </section>
+
+      <!-- Quick Tips Accordion / Direct Link Fallback -->
+      <footer class="footer-links">
+        <a href="https://share.google/agxZ8Q61Up1gNjKh7" target="_blank" rel="noopener noreferrer" class="direct-link">
+          Direct Google Business Link (If not redirecting) →
+        </a>
+        <div class="baker-signature">
+          Handcrafted with butter, sugar & gratitude 💛
+        </div>
+      </footer>
+
+    </main>
+
+  </div>
+
+  <!-- Smooth Success / Redirection Modal -->
+  <div class="modal-backdrop" id="successModal">
+    <div class="modal-card">
+      <div class="modal-confetti-icon">🎉</div>
+      <h3 class="modal-title">Review Copied to Clipboard!</h3>
+      <p class="modal-subtitle">
+        We're opening Google Maps in a moment. Here is what to do next:
+      </p>
+
+      <div class="guide-steps">
+        <div class="guide-step">
+          <div class="guide-num">1</div>
+          <div class="guide-info">
+            <strong>Google Business Page opens</strong>
+            <span>You'll see the 5-star review box</span>
+          </div>
+        </div>
+        <div class="guide-step">
+          <div class="guide-num">2</div>
+          <div class="guide-info">
+            <strong>Paste your review</strong>
+            <span>Long-press on mobile or press Ctrl+V</span>
+          </div>
+        </div>
+        <div class="guide-step">
+          <div class="guide-num">3</div>
+          <div class="guide-info">
+            <strong>Tap "Post"</strong>
+            <span>You've helped a small bakery grow! ✨</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="modal-primary-btn" id="proceedToGoogleBtn">
+          Open Google Maps Now 🚀
+        </button>
+        <button class="modal-secondary-btn" id="closeModalBtn">
+          Done
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- QR Code & Printable Stand Modal -->
+  <div class="modal-backdrop" id="qrModal">
+    <div class="modal-card qr-card-modal">
+      <div class="qr-modal-header">
+        <div>
+          <h3 class="modal-title">Cake Box QR Stand</h3>
+          <p class="modal-subtitle">Print or save this QR code to place inside delivery boxes</p>
+        </div>
+        <button class="close-icon-btn" id="closeQrModalBtn">&times;</button>
+      </div>
+
+      <!-- Printable Card Preview -->
+      <div class="printable-card" id="printableCard">
+        <div class="print-decor">🌸 🎂 🌸</div>
+        <h4 class="print-bakery-title" id="printBakeryName">Mom's Home Bakery</h4>
+        <p class="print-tagline">"Baked fresh with all our heart & sweetest ingredients"</p>
+
+        <div class="qr-canvas-holder" id="qrCodeContainer">
+          <!-- QR Code generated here -->
+        </div>
+
+        <div class="print-instruction">
+          <strong>Scan with phone camera</strong>
+          <span>Pick a pre-filled 5-star review in 5 seconds!</span>
+        </div>
+        <div class="print-stars">★★★★★</div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="modal-primary-btn" id="printCardBtn">
+          🖨️ Print / Save as PDF
+        </button>
+        <button class="modal-secondary-btn" id="copyPageLinkBtn">
+          🔗 Copy Webpage Link
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast-notification" id="toast">
+    <span class="toast-icon">✨</span>
+    <span class="toast-msg" id="toastMsg">Notification message</span>
+  </div>
+
+  <!-- Script -->
+  <script src="app.js"></script>
+</body>
+
+</html>
