@@ -19,7 +19,7 @@ const TEMPLATES = [
     tag: "Most Popular",
     icon: "🌟",
     snippet: "Hands down the best Home Bakery in Pune! Everything tasted super fresh, rich...",
-    text: "Hands down the best artisanal home bakery in town! Everything tasted incredibly fresh, rich, and made with genuine premium ingredients. The sweetness was perfectly balanced. You can truly taste the care and passion in every bite. Highly recommend to anyone looking for authentic home-baked treats!",
+    text: "Hands down the best Home Bakery in Pune! Everything tasted incredibly fresh, rich, and made with genuine premium ingredients. The sweetness was perfectly balanced. You can truly taste the care and passion in every bite. Highly recommend to anyone looking for authentic home-baked treats!",
     style: "Gourmet Foodie"
   },
   {
